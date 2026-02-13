@@ -62,14 +62,14 @@ export function LoginTemplate() {
       <div className="card">
         <ContentLogo>
           <img src={v.logo} />
-          <span>ada369 - POS VENTAS</span>
+          <span>Motorepuestos Arias</span>
         </ContentLogo>
         <Title $paddingbottom="40px">Ingresar Modo</Title>
         {stateModos && (
           <ContentModos>
             <CardModos
               title={"Super admin"}
-              subtitle={"crea y gestiona tu empresa"}
+              subtitle={"Gestiona tu empresa"}
               bgcolor={"#ed7323"}
               img={"https://i.ibb.co/TDXYj7r9/rey.png"}
               funcion={() => {
@@ -79,7 +79,7 @@ export function LoginTemplate() {
             />
             <CardModos
               title={"Empleado"}
-              subtitle={"vende y crece"}
+              subtitle={"A vender y gestionar inventario"}
               bgcolor={"#542a1b"}
               img={"https://i.ibb.co/ksfCmJyy/casco.png"}
               funcion={() => {
@@ -124,7 +124,7 @@ export function LoginTemplate() {
           : stateModos === false && (
               <PanelModo>
                 <VolverBtn funcion={() => setStateModos(!stateModos)} />
-                <span>Modo super admin</span>
+                <span>Modo administrador</span>
                 <Btn1
                   disabled={isPending}
                   funcion={manejarCrearUSerTester}
