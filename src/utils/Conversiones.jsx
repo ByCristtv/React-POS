@@ -14,16 +14,23 @@ export function ConvertirCapitalize(input) {
     return numeroconvertido
   }
   export  const urlToBase64 = async(imageUrl)=>{
-    const response = await fetch(imageUrl)
-    const blob = await response.blob()
-    const reader = new FileReader()
-    return new Promise ((resolve,reject)=>{
-      reader.onloadend=()=>{
-        resolve(reader.result)
-      }
-      reader.onerror = reject;
-      reader.readAsDataURL(blob)
-    })
+    try {
+      const corsUrl = `https://cors-anywhere.herokuapp.com/${imageUrl}`;
+      const response = await fetch(corsUrl)
+      const blob = await response.blob()
+      const reader = new FileReader()
+      return new Promise ((resolve,reject)=>{
+        reader.onloadend=()=>{
+          resolve(reader.result)
+        }
+        reader.onerror = reject;
+        reader.readAsDataURL(blob)
+      })
+    } catch (error) {
+      console.error("Error fetching image:", error);
+      // Return a placeholder base64 if fetch fails
+      return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+    }
   }
   export function numeroALetras(num,nombreMoneda) {
     const unidades = ["", "UNO", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE"];

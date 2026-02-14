@@ -50,22 +50,24 @@ export async function EditarEmpresa(p,fileold,filenew){
 
 export async function EditarIconoStorage(id,file){
   const ruta = "empresa/"+id
-  await supabase.storage.from("imagenes").update(ruta,file,{
+  await supabase.storage.from("images").update(ruta,file,{
     cacheControl:"0",
     upsert:true
   })
 }
 async function subirImagen (idempresa,file){
   const ruta = "empresa/"+idempresa
-  const {data, error}= await supabase.storage.from("imagenes").upload(ruta,file,{
+  const {data, error}= await supabase.storage.from("images").upload(ruta,file,{
     cacheControl:"0",
     upsert:true
   })
   if(error){
+    console.log(error)
     throw new Error(error.message);
+    
   }
   if(data){
-    const {data:urlimagen} = await supabase.storage.from("imagenes").getPublicUrl(ruta)
+    const {data:urlimagen} = await supabase.storage.from("images").getPublicUrl(ruta)
     return urlimagen
   }
 
