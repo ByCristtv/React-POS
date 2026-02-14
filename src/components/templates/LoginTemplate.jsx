@@ -67,7 +67,7 @@ export function LoginTemplate() {
         <Title $paddingbottom="40px">Ingresar Modo</Title>
         {stateModos && (
           <ContentModos>
-            {/*<CardModos
+            {/**/}<CardModos
               title={"Super admin"}
               subtitle={"Gestiona tu empresa"}
               bgcolor={"#ed7323"}
@@ -76,7 +76,7 @@ export function LoginTemplate() {
                 setStateModo("superadmin");
                 setStateModos(!stateModos);
               }}
-            /> */}
+            /> 
             <CardModos
               title={"Empleado"}
               subtitle={"A vender y gestionar inventario"}
