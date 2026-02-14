@@ -183,13 +183,7 @@ export function MyRoutes() {
       />
       <Route
         path="/"
-        element={
-          <Layout>
-            <ProtectedRoute accessBy="authenticated">
-              <Home />
-            </ProtectedRoute>
-          </Layout>
-        }
+        element={<Navigate to="/pos" />}
       />
       <Route
         path="/dashboard"

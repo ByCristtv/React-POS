@@ -30,7 +30,7 @@ export const ProtectedRoute = ({ children, accessBy }) => {
     if (!user) {
       return children;
     } else {
-      return <Navigate to="/" />;
+      return <Navigate to="/pos" />;
     }
   } else if (accessBy === "authenticated") {
     if (user) {

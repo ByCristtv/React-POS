@@ -34,94 +34,9 @@ export const LandingPagesWelcome = () => {
     <Container>
       <ContentSection>
         <SubContentSection>
-          <LeftSection className="left-section">
-            <h1>POS VENTAS CON REACT.JS {datausuarios?.id} </h1>
-            <Step>
-              <IconPlaceholder>
-                <img src="https://i.ibb.co/h19LCXP/aprendiendo.png" />
-              </IconPlaceholder>
-              <Text>
-                <Title>Aprende desde cero</Title>
-                <Description>
-                  Descubre cómo crear tu sistema de postventa profesional paso a
-                  paso.
-                </Description>
-              </Text>
-            </Step>
-            <Step>
-              <IconPlaceholder>
-                <img src="https://i.ibb.co/RBXt8Fs/taladro-de-mano.png" />
-              </IconPlaceholder>
-              <Text>
-                <Title>Domina herramientas esenciales</Title>
-                <Description>
-                  Desarrolla habilidades clave en programación.
-                </Description>
-              </Text>
-            </Step>
-            <Step>
-              <IconPlaceholder>
-                <img src="https://i.ibb.co/QPFxqC3/ejecutante.png" />
-              </IconPlaceholder>
-              <Text>
-                <Title>Aplica lo aprendido</Title>
-                <Description>
-                  Desde la idea inicial hasta la implementación.
-                </Description>
-              </Text>
-            </Step>
-            
-            <div style={{ display: "flex", gap: "10px" }}>
-            <BtnLink url={"https://codigo369.com/detallecurso/24"} color={"#fff"} bgcolor={"#ff6a00"} titulo={"inscribete aquí"} />
-              <BtnLink url={"https://t.me/ada369react"} color={"#2f2f2f"} bgcolor={"#ffffff"} titulo={"+ grupo telegram"} />
-            </div>
-          </LeftSection>
-          <RightSection className="right-section">
-            <MockupImage>
-              <CardFuncion
-                top="10px"
-                bgcontentimagen={"#fccdb8"}
-                left={"-50px"}
-                title={"Multi-empresa"}
-                imagen={"https://i.ibb.co/HCF7jnx/escaparate.png"}
-              />
-              <CardFuncion
-                top="110px"
-                bgcontentimagen={"#e3d4cc"}
-                left={"-20px"}
-                title={"Multi-sucursal"}
-                imagen={"https://i.ibb.co/MV6xZz4/franquicia.png"}
-              />
-              <CardFuncion
-                top="210px"
-                bgcontentimagen={"#aee0fd"}
-                left={"-50px"}
-                title={"Multi-caja"}
-                imagen={
-                  "https://i.ibb.co/3dZfQzF/caja-registradora.png"
-                }
-              />
-              <CardFuncion
-                top="310px"
-                bgcontentimagen={"#fdc2b7"}
-                left={"-20px"}
-                title={"Multi-almacen"}
-                imagen={
-                  "https://qkzybkelsdmoezaaypou.supabase.co/storage/v1/object/public/imagenes/modulos/almacen.png"
-                }
-              />
-               <CardFuncion
-                top="410px"
-                bgcontentimagen={"#52e0f9"}
-                left={"-50px"}
-                title={"Imprime directo"}
-                subtitle={"sin cuadro de diálogo"}
-                imagen={
-                  "https://qkzybkelsdmoezaaypou.supabase.co/storage/v1/object/public/imagenes/modulos/impresora.png"
-                }
-              />
-            </MockupImage>
-          </RightSection>
+          <Hero>
+            <HeroText>Bienvenido al sistema</HeroText>
+          </Hero>
         </SubContentSection>
       </ContentSection>
 
@@ -151,6 +66,7 @@ export const LandingPagesWelcome = () => {
         </FooterContent>
       </Footer>
     </Container>
+    
   );
 };
 
@@ -162,6 +78,25 @@ const Container = styled.div`
   padding: 20px;
   @media ${Device.desktop} {
     height: calc(100vh - 40px);
+  }
+`;
+const Hero = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 160px);
+`;
+
+const HeroText = styled.h1`
+  font-size: 40px;
+  font-weight: 800;
+  color: #0a2540;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 1px;
+  @media ${Device.desktop} {
+    font-size: 84px;
   }
 `;
 const SubContentSection = styled.div`

@@ -27,19 +27,14 @@ export const DesplegableUser = [
 //data SIDEBAR
 export const LinksArray = [
   {
-    label: "Home",
-    icon: "noto-v1:house",
-    to: "/",
+    label: "VENDER",
+    icon: "flat-color-icons:shop",
+    to: "/pos",
   },
   {
     label: "Dashboard",
     icon: "fluent-emoji-flat:antenna-bars",
     to: "/dashboard",
-  },
-  {
-    label: "VENDER",
-    icon: "flat-color-icons:shop",
-    to: "/pos",
   },
   {
     label: "Inventario",
