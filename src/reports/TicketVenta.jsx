@@ -20,7 +20,7 @@ const TicketVenta = async (output, data) => {
   });
   const logoempresa = await urlToBase64(
     data.dataempresa?.logo === "-"
-      ? "https://ibb.co/PGYPcKGL"
+      ? "https://ibb.co/Z6PsnfjV"
       : data.dataempresa?.logo
   );
   const productTableBody = [
