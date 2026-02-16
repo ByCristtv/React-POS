@@ -13,7 +13,6 @@ import {
 } from "../../../index";
 import { v } from "../../../styles/variables";
 import { Device } from "../../../styles/breakpoints";
-import { Icon } from "@iconify/react";
 import { useEffect, useRef, useState } from "react";
 
 import { useFormattedDate } from "../../../hooks/useFormattedDate";
@@ -232,6 +231,7 @@ const Header = styled.div`
   /* background-color: rgba(222, 18, 130, 0.5); */
   display: flex;
   height: 100%;
+  
 
   flex-direction: column;
   gap: 20px;

@@ -6,7 +6,6 @@ import { IngresoCobro } from "./IngresoCobro";
 import { VisorTicketVenta } from "./VisorTicketVenta";
 import { useVentasStore } from "../../../store/VentasStore";
 import { useDetalleVentasStore } from "../../../store/DetalleVentasStore";
-import { Switch } from "../../ui/toggles/Switch";
 import { useImpresorasStore } from "../../../store/ImpresorasStore";
 import { useEditarImpresorasMutation } from "../../../tanstack/ImpresorasStack";
 export function PantallaCobro() {
@@ -14,7 +13,6 @@ export function PantallaCobro() {
   const { setStatePantallaCobro, tipocobro } = useVentasStore();
   const ingresoCobroRef = useRef();
   const { datadetalleventa } = useDetalleVentasStore();
-  const { statePrintDirecto, setStatePrintDirecto } = useImpresorasStore();
   const { mutate, isPending } = useEditarImpresorasMutation();
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -40,19 +38,6 @@ export function PantallaCobro() {
             setState={() => setStateVerticker(!stateVerticket)}
           />
         )}
-
-        <article className="contentverticket">
-          <ContentSwich>
-            imprimir directo
-            <Switch
-              state={statePrintDirecto}
-              setState={() => {
-                setStatePrintDirecto();
-                mutate();
-              }}
-            />
-          </ContentSwich>
-        </article>
         {isPending ? (
           <spa>guardando cambios de impresora...</spa>
         ) : (

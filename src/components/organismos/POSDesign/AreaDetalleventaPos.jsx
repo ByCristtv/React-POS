@@ -183,7 +183,12 @@ export function AreaDetalleventaPos() {
               <span className="delete" onClick={() => mutateEliminarDV(item)}>
                 <Icon icon="weui:delete-filled" width="24" height="24" />
               </span>
+              <span className="stock">
+                <strong>Stock:{item.productos?.stock?.[0]?.stock}</strong> 
+              </span>
             </article>
+              
+
           </Itemventa>
         );
       })
@@ -193,9 +198,11 @@ export function AreaDetalleventaPos() {
   </AreaDetalleventa>
   );
 }
+
+
 const ContentTotalResponsive = styled.div`
   display: flex;
-  flex-direction: flex;
+  flex-direction: row;
   gap: 8px;
   width: 100%;
   justify-content: space-between;
