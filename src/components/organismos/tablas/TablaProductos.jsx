@@ -107,9 +107,9 @@ export function TablaProductos({
     },
     {
       accessorKey: "sevende_por",
-      header: "Se vende por",
+      header: "Stock",
       cell: (info) => (
-        <td data-title="Se vende por" className="ContentCell">
+        <td data-title="Stock" className="ContentCell">
           <span>{info.getValue()}</span>
         </td>
       ),

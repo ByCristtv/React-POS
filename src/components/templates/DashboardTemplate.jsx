@@ -23,8 +23,7 @@ export const DashboardTemplate = () => {
             />
           </ContentTotales>
           <ContentTotales>
-            <CardTotales
-             
+            <CardTotales           
               value={totalCantidadDetalleVentas}
               title="Cant. Productos vendidos"
               icon={"fluent-mdl2:product-variant"}

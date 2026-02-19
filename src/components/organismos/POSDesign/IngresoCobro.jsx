@@ -39,6 +39,7 @@ export const IngresoCobro = forwardRef((props, ref) => {
   const [stateBuscadorClientes, setStateBuscadorClientes] = useState(false);
   const [precioVenta, setPrecioVenta] = useState(total);
   const [valoresPago, setValoresPago] = useState({});
+  const [descuentoPorcentaje, setDescuentoPorcentaje] = useState(0);
   const [valorTarjeta, setValorTarjeta] = useState(
     tipocobro === "tarjeta" ? total : 0
   );
@@ -90,6 +91,9 @@ export const IngresoCobro = forwardRef((props, ref) => {
   // Función para calcular vuelto y restante
   //Movientos de caja
   const { insertarMovCaja } = useMovCajaStore();
+  // Calcular total con descuento
+  const totalConDescuento = total * (1 - descuentoPorcentaje / 100);
+
   const calcularVueltoYRestante = () => {
     const totalPagado = Object.values(valoresPago).reduce(
       (acc, curr) => acc + curr,
@@ -97,19 +101,19 @@ export const IngresoCobro = forwardRef((props, ref) => {
     );
     const totalSinEfectivo = totalPagado - (valoresPago["Efectivo"] || 0);
     // Si el total sin efectivo excede el precio de venta, no permitir el exceso
-    if (totalSinEfectivo > precioVenta) {
+    if (totalSinEfectivo > totalConDescuento) {
       setVuelto(0);
-      setRestante(precioVenta - totalSinEfectivo); //Restante negativo para indicar que se excede sin efectivo
+      setRestante(totalConDescuento - totalSinEfectivo); //Restante negativo para indicar que se excede sin efectivo
     } else {
       // Permitir el exceso solo si es en efectivo
-      if (totalPagado >= precioVenta) {
-        const exceso = totalPagado - precioVenta;
+      if (totalPagado >= totalConDescuento) {
+        const exceso = totalPagado - totalConDescuento;
         setVuelto(valoresPago["Efectivo"] ? exceso : 0);
         setRestante(0);
       } else {
         // Si el total pagado no cubre el precio de venta, calcular el restante
         setVuelto(0);
-        setRestante(precioVenta - totalPagado);
+        setRestante(totalConDescuento - totalPagado);
       }
     }
   };
@@ -150,7 +154,8 @@ export const IngresoCobro = forwardRef((props, ref) => {
         _id_sucursal: dataCierreCaja?.caja?.id_sucursal,
         _id_cliente: cliproItemSelect?.id || null,
         _fecha: fechaActual,
-        _monto_total: total,
+        _monto_total: totalConDescuento,
+        _descuento_porcentaje: descuentoPorcentaje,
       };
       console.log("confirmarVenta", pventas);
       const dataVentaConfirmada = await confirmarVenta(pventas);
@@ -241,16 +246,16 @@ export const IngresoCobro = forwardRef((props, ref) => {
   }
   //useEffect para recalcular cuando los valores cambian
   useEffect(() => {
-    if (tipocobro !== "Mixto" && valoresPago[tipocobro] != total) {
+    if (tipocobro !== "Mixto" && valoresPago[tipocobro] != totalConDescuento) {
       setValoresPago((prev) => ({
         ...prev,
-        [tipocobro]: total,
+        [tipocobro]: totalConDescuento,
       }));
     }
-  }, [tipocobro, total]);
+  }, [tipocobro, totalConDescuento]);
   useEffect(() => {
     calcularVueltoYRestante();
-  }, [precioVenta, tipocobro, valoresPago]);
+  }, [totalConDescuento, tipocobro, valoresPago]);
   return (
     <Container>
       {mutation.isPending ? (
@@ -303,7 +308,7 @@ export const IngresoCobro = forwardRef((props, ref) => {
                     onChange={(e) =>
                       handleChangePago(item.nombre, e.target.value)
                     }
-                    defaultValue={tipocobro === item.nombre ? total : ""}
+                    defaultValue={tipocobro === item.nombre ? totalConDescuento : ""}
                     className="form__field"
                     type="number"
                     disabled={
@@ -316,22 +321,47 @@ export const IngresoCobro = forwardRef((props, ref) => {
                 </InputText>
               ) : null;
             })}
+            <InputText textalign="center">
+              <input
+                onChange={(e) => {
+                  const valor = Math.min(Math.max(parseFloat(e.target.value) || 0, 0), 100);
+                  setDescuentoPorcentaje(valor);
+                }}
+                value={descuentoPorcentaje}
+                className="form__field"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="0"
+              />
+              <label className="form__label">Descuento (%) </label>
+            </InputText>
           </section>
           <Linea />
           <section className="area3">
             <article className="etiquetas">
               <span className="total">Total: </span>
+              {descuentoPorcentaje > 0 && <span>Descuento: </span>}
               <span>Vuelto: </span>
               <span>Restante: </span>
             </article>
             <article>
               <span className="total">
                 {FormatearNumeroDinero(
-                  total,
+                  totalConDescuento,
                   dataempresa?.currency,
                   dataempresa?.iso
                 )}
               </span>
+              {descuentoPorcentaje > 0 && (
+                <span style={{color: "#0aca21", fontWeight: "700"}}>
+                  -{FormatearNumeroDinero(
+                    total - totalConDescuento,
+                    dataempresa?.currency,
+                    dataempresa?.iso
+                  )}
+                </span>
+              )}
               <span>
                 {FormatearNumeroDinero(
                   vuelto,
