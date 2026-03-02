@@ -53,6 +53,7 @@ export function TablaProductos({
       }
     });
   }
+
   function editar(data) {
   
     SetopenRegistro(true);
@@ -106,7 +107,7 @@ export function TablaProductos({
       },
     },
     {
-      accessorKey: "sevende_por",
+      accessorKey: "stock_total",
       header: "Stock",
       cell: (info) => (
         <td data-title="Stock" className="ContentCell">
