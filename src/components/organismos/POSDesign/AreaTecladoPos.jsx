@@ -9,6 +9,7 @@ import { useMetodosPagoStore } from "../../../store/MetodosPagoStore";
 import { useQuery } from "@tanstack/react-query";
 import { useValidarPermisosOperativos } from "../../../hooks/useValidarPermisosOperativos";
 import { useDetalleVentasStore } from "../../../store/DetalleVentasStore";
+
 export function AreaTecladoPos() {
   const { setStatePantallaCobro, stateMetodosPago } = useVentasStore();
   const { dataempresa } = useEmpresaStore();
@@ -28,6 +29,8 @@ export function AreaTecladoPos() {
   };
 
   return (
+    
+
     <Container stateMetodosPago={stateMetodosPago}>
       <section className="areatipopago">
         {datametodospago?.map((item, index) => {
@@ -45,6 +48,7 @@ export function AreaTecladoPos() {
           );
         })}
       </section>
+      
       <section className="totales">
         {/* <div className="subtotal">
           <span>

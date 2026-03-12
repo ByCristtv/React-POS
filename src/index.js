@@ -9,6 +9,7 @@ export * from './components/moleculas/Btngenerarcodigo';
 export * from './components/moleculas/ImagenContent';
 export * from './components/moleculas/Spinner1';
 export * from './components/moleculas/SpinnerSecundario';
+export * from './supabase/crudCuentasPorCobrar';
 export * from './components/moleculas/SwitchHamburguesa';
 export * from './components/organismos/Buscador';
 export * from './components/organismos/Checkbox1';

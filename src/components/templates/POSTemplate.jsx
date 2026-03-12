@@ -26,10 +26,13 @@ import { useMostrarStockXAlmacenesYProductoQuery } from "../../tanstack/StockSta
 import { useMostrarMetodosPagoQuery } from "../../tanstack/MetodosPagoStack";
 import { useMostrarSerializacionesVentasQuery } from "../../tanstack/SerializacionStack";
 import { useMostrasrImpresorasPorCajaQuery } from "../../tanstack/ImpresorasStack";
+import { CreditosPanel } from "../organismos/POSDesign/CajaDesign/CreditosPanel";
+import { useState } from "react";
 export function POSTemplate() {
   const { statePantallaCobro } = useVentasStore();
   const { stateIngresoSalida, stateCierreCaja } = useCierreCajaStore();
   const { stateModal } = useStockStore();
+  const [stateCreditos, setStateCreditos] = useState(false);
   useBuscarProductosQuery();
   const { isLoading: isLoadingAlmacenXSucursal } =
     useMostrarAlmacenesXSucursalQuery();
@@ -43,15 +46,16 @@ export function POSTemplate() {
       {stateModal && <SelectAlmacenModal />}
 
       {statePantallaCobro && <PantallaCobro />}
-
+      
       <HeaderPos />
       <Main>
         <Toaster position="top-center" />
         <AreaDetalleventaPos />
         <AreaTecladoPos />
       </Main>
-      <FooterPos />
+      <FooterPos setStateCreditos={setStateCreditos} />
       <MenuFlotante />
+      {stateCreditos && <CreditosPanel onClose={() => setStateCreditos(false)} />}
       {stateIngresoSalida && <PantallaIngresoSalidaDinero />}
       {stateCierreCaja && <PantallaCierreCaja />}
     </Container>

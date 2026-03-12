@@ -384,10 +384,10 @@ export function RegistrarProductos({
                     value={randomCodeinterno}
                     onChange={handleChangeinterno}
                     type="number"
-                    placeholder="codigo interno"
+                    placeholder="codigo CAByS"
                     // {...register("codigo_interno")}
                   />
-                  <label className="form__label">codigo interno</label>
+                  <label className="form__label">codigo CAByS</label>
                 </InputText>
                 <ContainerBtngenerar>
                   <Btngenerarcodigo
