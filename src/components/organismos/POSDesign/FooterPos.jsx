@@ -7,7 +7,7 @@ import { useCierreCajaStore } from "../../../store/CierreCajaStore";
 import { useVentasStore } from "../../../store/VentasStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-export function FooterPos() {
+export function FooterPos({ setStateCreditos }) {
   const { eliminarVenta,idventa } = useVentasStore();
   const { setStateIngresoSalida, setTipoRegistro, setStateCierraCaja } =
   useCierreCajaStore();
@@ -51,7 +51,7 @@ export function FooterPos() {
           color="#2d2d2d"
           funcion={()=>{
             setStateIngresoSalida(true)
-        setTipoRegistro("ingreso")
+            setTipoRegistro("ingreso")
           } }
           icono={<Icon icon="fluent-emoji:dollar-banknote" />}
           titulo="Ingresar dinero"
@@ -61,10 +61,17 @@ export function FooterPos() {
           color="#2d2d2d"
           funcion={()=>{
             setStateIngresoSalida(true)
-        setTipoRegistro("salida")
+            setTipoRegistro("salida")
           } }
           icono={<Icon icon="noto-v1:money-bag" />}
           titulo="Retirar dinero"
+        />
+        <Btn1
+          bgcolor="#fff"
+          color="#2d2d2d"
+          funcion={()=>setStateCreditos(true)}
+          icono={<Icon icon="fluent-emoji:card-file-box" />}
+          titulo="Creditos"
         />
         {/* <Btn1
           bgcolor="#fff"

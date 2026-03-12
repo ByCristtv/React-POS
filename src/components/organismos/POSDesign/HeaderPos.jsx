@@ -14,14 +14,16 @@ import {
 import { v } from "../../../styles/variables";
 import { Device } from "../../../styles/breakpoints";
 import { useEffect, useRef, useState } from "react";
+import { CreditosPanel } from "./CajaDesign/CreditosPanel";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useMostrarStockXAlmacenesYProductoQuery } from "../../../tanstack/StockStack";
+import { useEliminarVentasIncompletasMutate } from "../../../tanstack/VentasStack";
 
 import { useFormattedDate } from "../../../hooks/useFormattedDate";
 import { useCierreCajaStore } from "../../../store/CierreCajaStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { SelectList } from "../../ui/lists/SelectList";
 import { useStockStore } from "../../../store/StockStore";
-import { useEliminarVentasIncompletasMutate } from "../../../tanstack/VentasStack";
 
 
 export function HeaderPos() {
@@ -153,14 +155,15 @@ export function HeaderPos() {
       }
     }
   }, [buscador]);
+
   return (
-    <Header>
+    <>
+      <Header>
       <ContentSucursal>
       <div>
          <strong>SUCURSAL:&nbsp; </strong>{" "}
         {dataCierreCaja.caja?.sucursales?.nombre}
       </div>
-      |
        <div>
        <strong>CAJA:&nbsp; </strong>{" "}
        {dataCierreCaja.caja?.descripcion}
@@ -218,12 +221,12 @@ export function HeaderPos() {
             />
           </InputText2>
         </article>
-        <article className="area2">
-          
+        <article className="area2">        
         
         </article>
       </section>
     </Header>
+    </>
   );
 }
 const Header = styled.div`

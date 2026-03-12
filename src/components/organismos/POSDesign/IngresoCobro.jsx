@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { useCuentasPorCobrarStore } from "../../../store/CuentasPorCobrarStore";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { InputText } from "../formularios/InputText";
 import { FormatearNumeroDinero } from "../../../utils/Conversiones";
@@ -93,6 +93,7 @@ export const IngresoCobro = forwardRef((props, ref) => {
   const { insertarMovCaja } = useMovCajaStore();
   // Calcular total con descuento
   const totalConDescuento = total * (1 - descuentoPorcentaje / 100);
+  const { registrarCuentaPorCobrar } = useCuentasPorCobrarStore();
 
   const calcularVueltoYRestante = () => {
     const totalPagado = Object.values(valoresPago).reduce(
@@ -243,6 +244,79 @@ export const IngresoCobro = forwardRef((props, ref) => {
     setTipocliente(tipo);
     setAccion("Nuevo");
     setStateClose(true);
+  }
+  async function ConfirmarVenta() {
+    if (restante === 0) {
+      const pventas = {
+        _id_venta: idventa,
+        _id_usuario: datausuarios?.id,
+        _vuelto: vuelto,
+        _id_tipo_comprobante: itemComprobanteSelect?.id_tipo_comprobante,
+        _serie: itemComprobanteSelect?.serie,
+        _id_sucursal: dataCierreCaja?.caja?.id_sucursal,
+        _id_cliente: cliproItemSelect?.id || null,
+        _fecha: fechaActual,
+        _monto_total: totalConDescuento,
+        _descuento_porcentaje: descuentoPorcentaje,
+      };
+      console.log("confirmarVenta", pventas);
+      const dataVentaConfirmada = await confirmarVenta(pventas);
+      const nuevosMetodosPago = [];
+      // Insertar en MovCaja solo los métodos de pago con monto mayor a 0
+      for (const [tipo, monto] of Object.entries(valoresPago)) {
+        if (monto > 0) {
+          const metodoPago = dataMetodosPago.find(
+            (item) => item.nombre === tipo
+          );
+          const pmovcaja = {
+            tipo_movimiento: "ingreso",
+            monto: monto,
+            id_metodo_pago: metodoPago?.id,
+            descripcion: `Pago de venta con ${tipo}`,
+            id_usuario: datausuarios?.id,
+            id_cierre_caja: dataCierreCaja?.id,
+            id_ventas: idventa,
+            vuelto: tipo === "Efectivo" ? vuelto : 0,
+          };
+          await insertarMovCaja(pmovcaja);
+          nuevosMetodosPago.push({ tipo, monto, vuelto });
+        }
+      }
+
+      // ========== ACCOUNTS RECEIVABLE (CUENTAS POR COBRAR) ==========
+      // Check if "Credito" was one of the payment methods used
+      const montoCredito = valoresPago["Credito"] || 0;
+      if (montoCredito > 0) {
+        // A client must be selected for credit sales
+        if (!cliproItemSelect?.id) {
+          toast.error("Debe seleccionar un cliente para ventas a crédito");
+          return;
+        }
+        await registrarCuentaPorCobrar({
+          _id_cliente: cliproItemSelect.id,
+          _id_empresa: dataempresa?.id,
+          _id_venta: idventa,
+          _monto: montoCredito,
+          _observacion: `Venta a crédito - ${itemComprobanteSelect?.serie}`,
+        });
+      }
+      // ================================================================
+
+      const pPrint = {
+        dataempresa: dataempresa,
+        productos: datadetalleventa,
+        dataventas: dataVentaConfirmada,
+        nombreComprobante: itemComprobanteSelect?.tipo_comprobantes?.nombre,
+        nombrecajero: datausuarios?.nombres,
+        dataCliente: cliproItemSelect,
+        metodosPago: nuevosMetodosPago,
+      };
+      dataImpresorasPorCaja?.state
+        ? imprimirDirectoTicket(pPrint)
+        : imprimirConVentanaEmergente(pPrint);
+    } else {
+      toast.warning("Falta completar el pago, el restante tiene que ser 0");
+    }
   }
   //useEffect para recalcular cuando los valores cambian
   useEffect(() => {
