@@ -14,7 +14,9 @@ export function POS() {
   }
   // Manejar errores de la consulta de cierre de caja
   if (error) {
+    console.error("Error al cargar datos de cierre de caja:", error);
     return <span>Error caja: {error.message}</span>;
+    
   }
 
   return dataCierreCaja ? <POSTemplate /> : <PantallaAperturaCaja />;
