@@ -2,6 +2,8 @@ import { create } from "zustand";
 import {
   MostrarCuentasPorCobrar,
   AbonarCuentaPorCobrar,
+  RegistrarCuentaPorCobrar,
+  MostrarMovimientosCxc
 } from "../supabase/crudCuentasPorCobrar";
 
 export const useCuentasPorCobrarStore = create((set) => ({
@@ -16,4 +18,14 @@ export const useCuentasPorCobrarStore = create((set) => ({
   abonarCuentaPorCobrar: async (p) => {
     await AbonarCuentaPorCobrar(p);
   },
+
+  registrarCuentaPorCobrar: async (p) => {
+    await RegistrarCuentaPorCobrar(p);
+  },
+
+  mostrarMovimientosCxc: async (p) => {
+    const response = await MostrarMovimientosCxc(p);
+    return response;
+  },
+
 }));

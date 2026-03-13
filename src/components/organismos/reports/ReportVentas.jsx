@@ -217,11 +217,11 @@ const ReportVentas = () => {
               <View style={styles.kpis}>
                 <View style={styles.kpi}>
                   <Text style={styles.kpiLabel}>Monto total de ventas</Text>
-                  <Text style={styles.kpiValue}>S/ {n(totalVentas)}</Text>
+                  <Text style={styles.kpiValue}>₡ {n(totalVentas)}</Text>
                 </View>
                 <View style={styles.kpi}>
                   <Text style={styles.kpiLabel}>Total impuestos</Text>
-                  <Text style={styles.kpiValue}>S/ {n(totalImpuestos)}</Text>
+                  <Text style={styles.kpiValue}>₡ {n(totalImpuestos)}</Text>
                 </View>
                 <View style={[styles.kpi, styles.kpiLast]}>
                   <Text style={styles.kpiLabel}>Cantidad de productos</Text>

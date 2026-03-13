@@ -45,7 +45,7 @@ const ReportStockBajoMinimo = () => {
   // Register the font
   Font.register({
     family: "Inconsolata",
-    src: "http://fonts.gstatic.com/s/inconsolata/v15/7bMKuoy6Nh0ft0SHnIGMuaCWcynf_cDxXwCLxiixG1c.ttf",
+    src: "https://fonts.gstatic.com/s/inconsolata/v15/7bMKuoy6Nh0ft0SHnIGMuaCWcynf_cDxXwCLxiixG1c.ttf",
   });
 
   const styles = StyleSheet.create({
